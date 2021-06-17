@@ -10,10 +10,10 @@ export interface TextContainerProps {
 export default function TextContainer({ title, subtitle, content, link }: TextContainerProps) {
   return (
     <Container>
-      <h1>{title}</h1>
-      <h3>{subtitle}</h3>
-      <p>{content}</p>
-      <LinkText>{link}</LinkText>
+      {title ? <h2>{title}</h2> : undefined}
+      {subtitle ? <h3>{subtitle}</h3> : undefined}
+      {content ? <p>{content}</p> : undefined}
+      {link ? <LinkText>{link}</LinkText> : undefined}
     </Container>
   );
 }
@@ -23,8 +23,7 @@ export const Container = styled.div`
 `;
 
 export const LinkText = styled.a`
- text-decoration:underline;
- text-decoration-color: yellow;
- cursor:pointer;
-
+  text-decoration: underline;
+  text-decoration-color: yellow;
+  cursor: pointer;
 `;
