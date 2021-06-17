@@ -9,12 +9,16 @@ library.add(fab, far, fas);
 export const theme = {
   navBarStyles: {
     light: {
-      backgroundColor: "rgba(0,0,0,0.05)",
+      backgroundPage: "white",
+      colorPage: "black",
+      backgroundColor: "rgba(0,0,0,0.30)",
       backgroundOnHoverItem: "rgba(0,0,0,0.10)",
-      boxShadowNavBar: "0 8px 17px rgba(0, 0, 0, 0.15)",
-      color: "black",
+      boxShadowNavBar: "0 8px 17px rgba(0, 0, 0, 0.45)",
+      color: "whitesmoke",
     },
     dark: {
+      backgroundPage: "black",
+      colorPage: "white",
       backgroundColor: "#000000c0",
       backgroundOnHoverItem: "rgba(255,255,255,0.33)",
       boxShadowNavBar: "0 8px 17px rgba(0, 0, 0, 0.15)",

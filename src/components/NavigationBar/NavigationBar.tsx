@@ -9,25 +9,33 @@ export interface NavigationBarProps {
  * Navigation Bar Component
  * @param navigationItem mandatory: navbar elements array. Put here all the navigation bar items.
  * @param variant mandatory: you can choose if you want light theme or dark theme
+ * @param logo optional: you can insert a logo on your navigationbar
  * @returns
  */
 export default function NavigationBar({ navigationItems, variant, logo }: NavigationBarProps) {
   return (
-    <NavigationBarContainer variant={variant}>
-      <LogoContainer variant={variant}>{logo}</LogoContainer>
-      <NavigationBarItemsContainer>
-        {navigationItems.map((item: JSX.Element, index: number) => {
-          return (
-            <NavItemContainer key={index} variant={variant}>
-              {item}
-            </NavItemContainer>
-          );
-        })}
-      </NavigationBarItemsContainer>
-    </NavigationBarContainer>
+    <NavigationNav>
+      <NavigationBarContainer variant={variant}>
+        <LogoContainer variant={variant}>{logo}</LogoContainer>
+        <NavigationBarItemsContainer>
+          {navigationItems.map((item: JSX.Element, index: number) => {
+            return (
+              <NavItemContainer key={index} variant={variant}>
+                {item}
+              </NavItemContainer>
+            );
+          })}
+        </NavigationBarItemsContainer>
+      </NavigationBarContainer>
+    </NavigationNav>
   );
 }
 
+export const NavigationNav = styled.nav`
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+`;
 export const NavigationBarContainer = styled.div<{
   variant: string;
 }>`

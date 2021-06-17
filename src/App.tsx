@@ -1,15 +1,21 @@
 import "./App.css";
 import Theme from "./components/Theme";
+import styled from "styled-components";
 
-import NavigationBar from "./components/NavigationBar";
+import HomePage from "./components/HomePage";
 function App() {
+  const variant = "light";
   return (
     <Theme>
-      <div className="App">
-        <NavigationBar navigationItems={[<div>About</div>, <div>Services</div>, <div>Projects</div>]} logo={"Sunnyside"} variant={"light"} />
-      </div>
+      <SuperContainer variant={variant}>
+        <HomePage variant={variant} />
+      </SuperContainer>
     </Theme>
   );
 }
-
+export const SuperContainer = styled.div<{ variant: string }>`
+  background-color: ${(props) => props.theme.navBarStyles[props.variant].backgroundPage};
+  color: ${(props) => props.theme.navBarStyles[props.variant].colorPage};
+  text-align: center;
+`;
 export default App;
