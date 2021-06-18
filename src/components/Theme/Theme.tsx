@@ -11,8 +11,8 @@ export const theme = {
     light: {
       backgroundPage: "white",
       colorPage: "black",
-      backgroundColor: "rgba(0,0,0,0.30)",
-      backgroundOnHoverItem: "rgba(0,0,0,0.10)",
+      backgroundColor: "rgba(0,0,0,0.60)",
+      backgroundOnHoverItem: "rgba(255,255,255,0.33)",
       boxShadowNavBar: "0 8px 17px rgba(0, 0, 0, 0.45)",
       color: "whitesmoke",
     },

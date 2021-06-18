@@ -1,20 +1,46 @@
 import styled from "styled-components";
-import NavigationBar from "../NavigationBar";
+import React, { useEffect, useState } from "react";
 import HeroImage from "../HeroImage";
 import ColumnContainer from "../ColumnsContainer";
 import TextContainer from "../TextContainer";
 import image from "../../images/imageHome.jpg";
 import imagexs from "../../images/imageHome_small.jpg";
 import fruit from "../../images/fruit.jpg";
+import { useFetchData, joinData } from "../../utils/requests";
+import { randomId } from "../../utils/functions";
+import TestimonialProps from "../../types/Testimonial/Testimonial";
 
 export interface HomeProps {
   variant: string;
 }
 
+/**
+ * PERSONALIZED COMPONENT - THIS IS NOT A GENERIC COMPONENT -
+ * This is the HomePage component. You can personalize this code as you prefer.
+ * @param variant mandatory: you can choose if you want light theme or dark theme
+ * @returns
+ */
 export default function Home({ variant }: HomeProps) {
+  //react-query to fetch data
+  const usersQuery = useFetchData("users", "https://jsonplaceholder.typicode.com/users");
+  const postsQuery = useFetchData("posts", "https://jsonplaceholder.typicode.com/posts");
+  //in this state I save the union of usersQuery data and postsQuery data (join by userId)
+  const [dataUsersPosts, setDataUsersPosts] = useState<Array<TestimonialProps>>([]);
+  //take three random post ids
+  let randomPostId = randomId(3, 100);
+  //filter data to take only the three random posts
+  const postToShow: TestimonialProps[] | undefined = dataUsersPosts.filter(
+    (element) => element.id === randomPostId[0] || element.id === randomPostId[1] || element.id === randomPostId[2]
+  );
+  //join by idUser and save on state
+  useEffect(() => {
+    if (usersQuery && postsQuery) {
+      setDataUsersPosts(joinData(usersQuery, postsQuery));
+    }
+  }, [usersQuery, postsQuery]);
+
   return (
     <div>
-      <NavigationBar navigationItems={[<div>About</div>, <div>Services</div>, <div>Projects</div>]} logo={"Sunnyside"} variant={variant} />
       <HeroImage variant={variant} image={image} imagexs={imagexs} textLabelOnImage={"...WE ARE CREATIVES"} />
       <ColumnContainer
         variant={variant}
@@ -22,7 +48,9 @@ export default function Home({ variant }: HomeProps) {
           <ImageSection src={fruit} />,
           <TextContainer
             title={"Transform your brand"}
-            content={"We are a full-service agency specializing in helping brands grow fast. Engage your clients through compelling visuals that do most of the marketing for you."}
+            informations={[
+              "We are a full-service agency specializing in helping brands grow fast. Engage your clients through compelling visuals that do most of the marketing for you.",
+            ]}
             link={"Learn More"}
           />,
         ]}
@@ -32,19 +60,24 @@ export default function Home({ variant }: HomeProps) {
         items={[
           <TextContainer
             title={"Stand out to the right audience"}
-            content={"Using a collaborative formuila of designers, researchers, photographers, videographers and copywriters, we'll build an extend your brand in digital places."}
+            informations={[
+              "Using a collaborative formuila of designers, researchers, photographers, videographers and copywriters, we'll build an extend your brand in digital places.",
+            ]}
             link={"Learn More"}
           />,
 
           <ImageSection src={fruit} />,
         ]}
       />
+      <ColumnContainer
+        variant={variant}
+        items={postToShow.map((item: TestimonialProps) => {
+          return <TextContainer key={item.id} title={item.title} informations={[item.user, item.post]} />;
+        })}
+      />
     </div>
   );
 }
-
 export const ImageSection = styled.img`
   width: 100%;
 `;
-
-export const ItemSection = styled.img``;

@@ -1,12 +1,18 @@
 import styled from "styled-components";
 export interface ColumnContainerProps {
-  items: JSX.Element[];
+  items?: JSX.Element[] | undefined;
   variant: string;
 }
+/**
+ * The component manages a row box in the page. It divided the row into columns. Every element of items represents a column.
+ * @param items
+ * @param variant
+ * @returns
+ */
 export default function ColumnContainer({ items, variant }: ColumnContainerProps) {
   return (
     <ItemsContainer>
-      {items.map((item: JSX.Element, index: number) => {
+      {items?.map((item: JSX.Element, index: number) => {
         return <Item key={index}>{item}</Item>;
       })}
     </ItemsContainer>
@@ -21,5 +27,4 @@ export const ItemsContainer = styled.div`
 export const Item = styled.div`
   width: 100%;
   align-self: center;
-
 `;
