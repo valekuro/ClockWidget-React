@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import HeroImage from "../HeroImage";
 import ColumnContainer from "../ColumnsContainer";
 import TextContainer from "../TextContainer";
@@ -10,6 +10,7 @@ import fruitxs from "../../images/fruitxs.jpg";
 import { useFetchData, joinData } from "../../utils/requests";
 import { randomId } from "../../utils/functions";
 import TestimonialProps from "../../types/Testimonial/Testimonial";
+import Posts from "../Posts";
 import Avatar from "../Avatar";
 import myImage from "../../images/avatar.jpg";
 export interface HomeProps {
@@ -27,20 +28,39 @@ export default function Home({ variant }: HomeProps) {
   const usersQuery = useFetchData("users", "https://jsonplaceholder.typicode.com/users");
   const postsQuery = useFetchData("posts", "https://jsonplaceholder.typicode.com/posts");
   //in this state I save the union of usersQuery data and postsQuery data (join by userId)
-  const [dataUsersPosts, setDataUsersPosts] = useState<Array<TestimonialProps>>([]);
+  const [dataUsersPosts, setDataUsersPosts] = useState<TestimonialProps[]>(joinData(usersQuery, postsQuery));
   //take three random post ids
-  let randomPostId = randomId(3, 100);
+  const [nextElements, setNextElements] = useState<TestimonialProps[]>([]);
   //filter data to take only the three random posts
-  const postToShow: TestimonialProps[] | undefined = dataUsersPosts.filter(
-    (element) => element.id === randomPostId[0] || element.id === randomPostId[1] || element.id === randomPostId[2]
-  );
+  const [postToShow, setPostToShow] = useState<TestimonialProps[]>([]);
+
   //join by idUser and save on state
   useEffect(() => {
-    if (usersQuery && postsQuery) {
-      setDataUsersPosts(joinData(usersQuery, postsQuery));
+    setDataUsersPosts(joinData(usersQuery, postsQuery));
+  }, [usersQuery !== undefined, postsQuery !== undefined]);
+  useEffect(() => {
+    setNextElements(dataUsersPosts);
+    setPostToShow([...dataUsersPosts.slice(0, 3)]);
+  }, [dataUsersPosts]);
+  const handleClickForward = () => {
+    let calculateNextElement = nextElements;
+    let next = calculateNextElement.slice(3, nextElements.length);
+    if (next.length == 0) {
+      next = [...dataUsersPosts];
     }
-  }, [usersQuery, postsQuery]);
-
+    setNextElements(next);
+    setPostToShow([...next.slice(0, 3)]);
+  };
+  const handleClickBackward = () => {
+    const previousPosts = postToShow.map((post: TestimonialProps) => {
+      const id: number = post.id ? +post.id : 0;
+      /* console.log("actual post id     ", post.id);
+      console.log("new id calc    ", id - 3); */
+      return id - 3;
+    });
+    const newPreviuosPosts = dataUsersPosts.filter((el) => el.id === previousPosts[0] || el.id === previousPosts[1] || el.id === previousPosts[2]);
+    console.log(newPreviuosPosts);
+  };
   return (
     <div>
       <HeroImage variant={variant} image={image} imagexs={imagexs} textLabelOnImage={"...WE ARE CREATIVES"} />
@@ -71,33 +91,7 @@ export default function Home({ variant }: HomeProps) {
           <ImageSection src={fruit} />,
         ]}
       />
-      <ColumnContainer
-        variant={variant}
-        items={[
-          <CommentsContainer>
-            <Avatar src={myImage} size="medium" alt={"Your profile image"} />{" "}
-          </CommentsContainer>,
-          <CommentsContainer>
-            <Avatar src={myImage} size="medium" alt={"Your profile image"} />{" "}
-          </CommentsContainer>,
-          <CommentsContainer>
-            <Avatar src={myImage} size="medium" alt={"Your profile image"} />{" "}
-          </CommentsContainer>,
-        ]}
-      />
-
-      <ColumnContainer
-        variant={variant}
-        items={postToShow.map((item: TestimonialProps) => {
-          return <TextContainer key={item.id} informations={[item.user]} />;
-        })}
-      />
-      <ColumnContainer
-        variant={variant}
-        items={postToShow.map((item: TestimonialProps) => {
-          return <TextContainer key={item.id} informations={[item.post]} />;
-        })}
-      />
+      <Posts items={postToShow} variant={variant} onClickForward={handleClickForward} onClickBackward={handleClickBackward} />
     </div>
   );
 }
@@ -106,9 +100,4 @@ export const ImageSection = styled.img`
   @media only screen and (max-width: 600px) {
     content: url(${fruitxs});
   }
-`;
-
-export const CommentsContainer = styled.div`
-  margin-top: 4em;
-  margin-bottom: 1.6em;
 `;

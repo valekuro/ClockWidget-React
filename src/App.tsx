@@ -8,15 +8,15 @@ import NavigationBar from "./components/NavigationBar";
 const queryClient = new QueryClient();
 function App() {
   const variant = "light";
-  const A = ["a", "b", "c", "d"];
+  /*   const A = ["a", "b", "c", "d"];
   A.push("e");
   console.log("array  ", A);
-  console.log("pop  ", A.pop());
+  console.log("pop  ", A.pop()); */
   return (
     <Theme>
       <QueryClientProvider client={queryClient}>
         <SuperContainer variant={variant}>
-          <NavigationBar navigationItems={[<div>About</div>, <div>Services</div>, <div>Projects</div>, <div>Language</div>]} logo={"Sunnyside"} variant={variant} />
+          <NavigationBar navigationItems={[<div>About</div>, <div>Services</div>, <div>Projects</div>]} logo={"Sunnyside"} variant={variant} />
           <HomePage variant={variant} />
           <FooterContainer variant={variant}>
             <ColumnContainer variant={variant} items={[<NameFooter>Valentina</NameFooter>]} />
