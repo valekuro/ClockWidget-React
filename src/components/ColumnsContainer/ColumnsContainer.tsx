@@ -23,8 +23,11 @@ export const ItemsContainer = styled.div`
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-evenly;
+  width: 100%;
 `;
 export const Item = styled.div`
   width: 100%;
   align-self: center;
+  display: flex;
+  flex-flow: column nowrap;
 `;

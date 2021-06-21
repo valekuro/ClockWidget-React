@@ -15,12 +15,15 @@ export const theme = {
       backgroundOnHoverItem: "rgba(255,255,255,0.33)",
       boxShadowNavBar: "0 8px 17px rgba(0, 0, 0, 0.45)",
       color: "whitesmoke",
+      backgroundFooter: "rgba(0,0,0,0.33)",
     },
     dark: {
       backgroundPage: "black",
       colorPage: "white",
       backgroundColor: "#000000c0",
       backgroundOnHoverItem: "rgba(255,255,255,0.33)",
+      backgroundFooter: "rgba(255,255,255,0.33)",
+
       boxShadowNavBar: "0 8px 17px rgba(0, 0, 0, 0.15)",
       color: "white",
     },
@@ -29,10 +32,18 @@ export const theme = {
     fontFamilyLogo: "'Dancing Script', cursive",
     fontSizeLogo: "1.5em",
   },
+
+  avatarSizes: {
+    small: "3em",
+    medium: "5em",
+    large: "7em",
+  },
 };
 
 export type NavBarStyles = keyof typeof theme.navBarStyles;
 export type LogoStyles = typeof theme.logoStyles;
+export type AvatarSizes = keyof typeof theme.avatarSizes;
+
 interface Props {
   children: React.ReactNode;
 }

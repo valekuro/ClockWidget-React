@@ -6,10 +6,12 @@ import TextContainer from "../TextContainer";
 import image from "../../images/imageHome.jpg";
 import imagexs from "../../images/imageHome_small.jpg";
 import fruit from "../../images/fruit.jpg";
+import fruitxs from "../../images/fruitxs.jpg";
 import { useFetchData, joinData } from "../../utils/requests";
 import { randomId } from "../../utils/functions";
 import TestimonialProps from "../../types/Testimonial/Testimonial";
-
+import Avatar from "../Avatar";
+import myImage from "../../images/avatar.jpg";
 export interface HomeProps {
   variant: string;
 }
@@ -71,8 +73,29 @@ export default function Home({ variant }: HomeProps) {
       />
       <ColumnContainer
         variant={variant}
+        items={[
+          <CommentsContainer>
+            <Avatar src={myImage} size="medium" alt={"Your profile image"} />{" "}
+          </CommentsContainer>,
+          <CommentsContainer>
+            <Avatar src={myImage} size="medium" alt={"Your profile image"} />{" "}
+          </CommentsContainer>,
+          <CommentsContainer>
+            <Avatar src={myImage} size="medium" alt={"Your profile image"} />{" "}
+          </CommentsContainer>,
+        ]}
+      />
+
+      <ColumnContainer
+        variant={variant}
         items={postToShow.map((item: TestimonialProps) => {
-          return <TextContainer key={item.id} title={item.title} informations={[item.user, item.post]} />;
+          return <TextContainer key={item.id} informations={[item.user]} />;
+        })}
+      />
+      <ColumnContainer
+        variant={variant}
+        items={postToShow.map((item: TestimonialProps) => {
+          return <TextContainer key={item.id} informations={[item.post]} />;
         })}
       />
     </div>
@@ -80,4 +103,12 @@ export default function Home({ variant }: HomeProps) {
 }
 export const ImageSection = styled.img`
   width: 100%;
+  @media only screen and (max-width: 600px) {
+    content: url(${fruitxs});
+  }
+`;
+
+export const CommentsContainer = styled.div`
+  margin-top: 4em;
+  margin-bottom: 1.6em;
 `;

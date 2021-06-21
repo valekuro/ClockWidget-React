@@ -1,7 +1,7 @@
-import Theme, {theme, NavBarStyles, LogoStyles} from './Theme';
+import Theme, {theme, NavBarStyles, LogoStyles, AvatarSizes} from './Theme';
 
 export default Theme;
 
 export { theme };
-export type { NavBarStyles, LogoStyles };
+export type { NavBarStyles, LogoStyles, AvatarSizes };
 
