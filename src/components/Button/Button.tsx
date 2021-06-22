@@ -3,7 +3,7 @@ import React from "react";
 export interface ButtonProps {
   borderRadius: string;
   textOnButton?: string;
-  iconOnButton?: JSX.Element[];
+  iconOnButton?: JSX.Element;
   variant: string;
   style?: React.CSSProperties;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
@@ -19,6 +19,7 @@ export default function Button({ borderRadius, textOnButton, iconOnButton, varia
 
 export const ButtonStyle = styled.button<{ borderRadius: string; variant: string }>`
   border-radius: ${(props) => props.borderRadius};
+  padding: 1em;
   background-color: ${(props) => props.theme.navBarStyles[props.variant].backgroundColor};
   color: ${(props) => props.theme.navBarStyles[props.variant].color};
 `;

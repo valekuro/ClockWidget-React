@@ -34,7 +34,7 @@ export default function NavigationBar({ navigationItems, variant, logo }: Naviga
 export const NavigationNav = styled.nav`
   position: fixed;
   width: 100%;
-  z-index: 1;
+  z-index: 6;
 `;
 export const NavigationBarContainer = styled.div<{
   variant: string;
@@ -59,6 +59,8 @@ export const NavItemContainer = styled.div<{
   display: flex;
   padding: 1.3em;
   cursor: pointer;
+  color: ${(props) => props.theme.navBarStyles[props.variant].color};
+  text-decoration: none;
   &:hover {
     background-color: ${(props) => props.theme.navBarStyles[props.variant].backgroundOnHoverItem};
   }

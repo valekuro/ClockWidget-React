@@ -49,7 +49,7 @@ export const LabelOnImage = styled.div<{
   position: absolute;
   width: 100%;
 
-  top: 20rem;
+  top: 15rem;
   z-index: 1;
   padding: 1em;
   font-family: ${(props) => props.theme.logoStyles.fontFamilyLogo};
@@ -57,7 +57,7 @@ export const LabelOnImage = styled.div<{
   color: whitesmoke;
 
   @media only screen and (max-width: 1366px) {
-    top: 11rem;
+    top: 6.5rem;
     font-size: 2em;
   }
 `;

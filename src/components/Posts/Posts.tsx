@@ -4,20 +4,17 @@ import Avatar from "../Avatar";
 import TextContainer from "../TextContainer";
 import TestimonialProps from "../../types/Testimonial/Testimonial";
 import myImage from "../../images/avatar.jpg";
-import Button from "../Button";
 export interface PostsProps {
   items: TestimonialProps[];
   variant: string;
-  onClickForward?: React.MouseEventHandler<HTMLButtonElement>;
-  onClickBackward?: React.MouseEventHandler<HTMLButtonElement>;
+  backwardButton?: JSX.Element;
+  forwardButton?: JSX.Element;
 }
 
-export default function Posts({ items, variant, onClickBackward, onClickForward }: PostsProps) {
+export default function Posts({ items, variant, backwardButton, forwardButton }: PostsProps) {
   return (
     <div style={{ display: "flex", flexFlow: "column nowrap", width: "100%", justifyContent: "center" }}>
-      <div style={{ width: "100%", position: "absolute", display: "flex", justifyContent: "flex-start" }}>
-        <Button style={{ flexGrow: 1, position: "absolute" }} variant={variant} textOnButton={"df"} borderRadius={"100%"} onClick={onClickBackward} />
-      </div>
+      {forwardButton}
       <div style={{ flexGrow: 1 }}>
         <ColumnContainer
           variant={variant}
@@ -43,9 +40,7 @@ export default function Posts({ items, variant, onClickBackward, onClickForward 
           })}
         />
       </div>
-      <div style={{ width: "100%", position: "absolute", display: "flex", justifyContent: "flex-end" }}>
-        <Button style={{ flexGrow: 1, position: "absolute", alignSelf: "end" }} variant={variant} textOnButton={"df"} borderRadius={"100%"} onClick={onClickForward} />
-      </div>
+      {backwardButton}
     </div>
   );
 }

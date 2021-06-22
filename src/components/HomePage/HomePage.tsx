@@ -1,5 +1,7 @@
 import styled from "styled-components";
-import React, { useEffect, useState, useCallback, useMemo } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import { useEffect, useState } from "react";
 import HeroImage from "../HeroImage";
 import ColumnContainer from "../ColumnsContainer";
 import TextContainer from "../TextContainer";
@@ -8,11 +10,9 @@ import imagexs from "../../images/imageHome_small.jpg";
 import fruit from "../../images/fruit.jpg";
 import fruitxs from "../../images/fruitxs.jpg";
 import { useFetchData, joinData } from "../../utils/requests";
-import { randomId } from "../../utils/functions";
 import TestimonialProps from "../../types/Testimonial/Testimonial";
 import Posts from "../Posts";
-import Avatar from "../Avatar";
-import myImage from "../../images/avatar.jpg";
+import Button from "../Button";
 export interface HomeProps {
   variant: string;
 }
@@ -29,37 +29,52 @@ export default function Home({ variant }: HomeProps) {
   const postsQuery = useFetchData("posts", "https://jsonplaceholder.typicode.com/posts");
   //in this state I save the union of usersQuery data and postsQuery data (join by userId)
   const [dataUsersPosts, setDataUsersPosts] = useState<TestimonialProps[]>(joinData(usersQuery, postsQuery));
-  //take three random post ids
+  //the state helps to keep track of the next element (forward button posts' carousel)
   const [nextElements, setNextElements] = useState<TestimonialProps[]>([]);
-  //filter data to take only the three random posts
+  //keep track of posts to show
   const [postToShow, setPostToShow] = useState<TestimonialProps[]>([]);
 
-  //join by idUser and save on state
   useEffect(() => {
     setDataUsersPosts(joinData(usersQuery, postsQuery));
   }, [usersQuery !== undefined, postsQuery !== undefined]);
+
   useEffect(() => {
     setNextElements(dataUsersPosts);
     setPostToShow([...dataUsersPosts.slice(0, 3)]);
   }, [dataUsersPosts]);
+
+  //manage click forward (posts' carousel)
+  //nextElements is initialized by the entire dataUserPosts and then remove the previous elements to it.
+  //if you arrive at the last element, nextElements is populated again
   const handleClickForward = () => {
     let calculateNextElement = nextElements;
     let next = calculateNextElement.slice(3, nextElements.length);
-    if (next.length == 0) {
-      next = [...dataUsersPosts];
+    console.log(next.length);
+    if (next.length === 0) {
+      setPostToShow([dataUsersPosts[dataUsersPosts.length - 1]]);
+    } else {
+      setNextElements(next);
+      setPostToShow([...next.slice(0, 3)]);
     }
-    setNextElements(next);
-    setPostToShow([...next.slice(0, 3)]);
   };
+
+  //manage click backward (posts' carousel)
+  // previousPosts array takes the posts' id on the screen in this moment and returns the previuos three ids
   const handleClickBackward = () => {
+    let calculatePrevElement = dataUsersPosts;
     const previousPosts = postToShow.map((post: TestimonialProps) => {
       const id: number = post.id ? +post.id : 0;
-      /* console.log("actual post id     ", post.id);
-      console.log("new id calc    ", id - 3); */
       return id - 3;
     });
-    const newPreviuosPosts = dataUsersPosts.filter((el) => el.id === previousPosts[0] || el.id === previousPosts[1] || el.id === previousPosts[2]);
-    console.log(newPreviuosPosts);
+    //not negative indexes! If you are at the end of the array, you can see only the first three elements
+    if (previousPosts[1] <= 0) {
+      setPostToShow([dataUsersPosts[0], dataUsersPosts[1], dataUsersPosts[2]]);
+    } else {
+      //previuosArray takes all the previous items
+      const previousArray = calculatePrevElement.slice(0, previousPosts[2]);
+      setNextElements(dataUsersPosts.slice(previousPosts[0] - 1, dataUsersPosts.length));
+      setPostToShow([previousArray[previousArray.length - 3], previousArray[previousArray.length - 2], previousArray[previousArray.length - 1]]);
+    }
   };
   return (
     <div>
@@ -91,7 +106,32 @@ export default function Home({ variant }: HomeProps) {
           <ImageSection src={fruit} />,
         ]}
       />
-      <Posts items={postToShow} variant={variant} onClickForward={handleClickForward} onClickBackward={handleClickBackward} />
+      <Posts
+        items={postToShow}
+        variant={variant}
+        forwardButton={
+          <div style={{ width: "100%", position: "absolute", display: "flex", justifyContent: "flex-start" }}>
+            <Button
+              style={{ flexGrow: 1, position: "absolute" }}
+              variant={variant}
+              iconOnButton={<FontAwesomeIcon icon={["fas", "angle-double-left"]} style={{ fontSize: "1.5em" }} />}
+              borderRadius={"15%"}
+              onClick={handleClickBackward}
+            />
+          </div>
+        }
+        backwardButton={
+          <div style={{ width: "100%", position: "absolute", display: "flex", justifyContent: "flex-end" }}>
+            <Button
+              style={{ flexGrow: 1, position: "absolute", alignSelf: "end" }}
+              variant={variant}
+              iconOnButton={<FontAwesomeIcon icon={["fas", "angle-double-right"]} style={{ fontSize: "1.5em" }} />}
+              borderRadius={"15%"}
+              onClick={handleClickForward}
+            />
+          </div>
+        }
+      />
     </div>
   );
 }

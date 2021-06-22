@@ -1,4 +1,4 @@
-import { Story, Meta } from "@storybook/react";
+import { Story } from "@storybook/react";
 import Theme, { theme } from "../Theme";
 import NavigationBar, { NavigationBarProps } from "./NavigationBar";
 export default {
@@ -37,5 +37,5 @@ export const NavigationBar_ = Template.bind({});
 NavigationBar_.args = {
   variant: "light",
   logo: "Sunnyside",
-  navigationItems: [<div>About</div>, <div>Services</div>, <div>Projects</div>],
+  navigationItems: [<div>About</div>, <div>Contact us</div>, <div>Language</div>],
 };

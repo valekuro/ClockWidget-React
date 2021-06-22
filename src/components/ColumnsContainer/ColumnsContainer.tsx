@@ -28,5 +28,6 @@ export const Item = styled.div`
   align-self: center;
   width: 100%;
   display: flex;
+  padding: 0.4em;
   flex-flow: column nowrap;
 `;
