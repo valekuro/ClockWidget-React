@@ -1,142 +1,90 @@
-import React, { useRef, useState } from "react";
+import { useRef } from "react";
 import styled from "styled-components";
 import HeroImage from "../HeroImage";
 import image from "../../images/Contactus.jpg";
 import imagexs from "../../images/Contactusxs.jpg";
-
-import Input from "../Input";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import TextArea from "../Textarea";
+import { object, string } from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { DataModel } from "./DataModel";
+import get from "lodash/get";
+import { useAppDispatch } from "../../app/store/hooks";
+import { RootState } from "../../app/store/store";
+import { useHistory, BrowserRouter as Router } from "react-router-dom";
+import { takeData } from "../../reducers/ContactUsSlice";
 import Button from "../Button";
+import { TextareaAutosize, TextField, FormControl } from "@material-ui/core";
 
 export interface ContactUsPageProps {
   variant: string;
 }
+const useSchema = () => {
+  const schema = object().shape({
+    name: string().required("Il campo non può essere vuoto"),
+    /* email: string().email("Enter a valid email").required("Email is required"), */
+    email: string().email("L'indirizzo inserito non è valido").required("Il campo non può essere vuoto"),
+    subject: string().required("Il campo non può essere vuoto"),
+    message: string().required("Hai dimenticato di scrivere il tuo messaggio!"),
+  });
+  return schema;
+};
 
 export default function ContactUsPage({ variant }: ContactUsPageProps) {
+  //const hhh = useSelector((state: RootState) => state.data);
+  const dispatch = useAppDispatch();
+  const history = useHistory();
+
+  const schema = useSchema();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<DataModel>({ resolver: yupResolver(schema) });
+
+  const nameError = get(errors, "name.message");
+  const emailError = get(errors, "email.message");
+  const subjectError = get(errors, "subject.message");
+  const messageError = get(errors, "message.message");
+  const onSubmit = (data: DataModel) => {
+    dispatch(takeData(data));
+    history.push(`/contactus/${(state: RootState) => state.ContactUsSlice.data}`);
+  };
+
   const refName = useRef<HTMLInputElement | null>(null);
   const refEmailAddress = useRef<HTMLInputElement | null>(null);
   const refSubject = useRef<HTMLInputElement | null>(null);
   const refTextArea = useRef<HTMLTextAreaElement | null>(null);
-
-  const [nameValue, setNameValue] = useState<string>("");
-  const [emailAddressValue, setEmailAddressValue] = useState<string>("");
-  const [subjectValue, setSubjectValue] = useState<string>("");
-  const [textAreaValue, setTextAreaValue] = useState<string>("");
-
-  const handleInputNameOnChange = () => {
-    const { current } = refName;
-    setNameValue(current!.value!);
-  };
-
-  const handleInputNameCloseOnClick = () => {
-    setNameValue("");
-  };
-  const handleInputEmailAddressOnChange = () => {
-    const { current } = refEmailAddress;
-    setEmailAddressValue(current!.value!);
-  };
-
-  const handleInputEmailAddressCloseOnClick = () => {
-    setEmailAddressValue("");
-  };
-  const handleInputSubjectOnChange = () => {
-    const { current } = refSubject;
-    setSubjectValue(current!.value!);
-  };
-
-  const handleInputSubjectCloseOnClick = () => {
-    setSubjectValue("");
-  };
-
-  const handleTextAreaOnChange = () => {
-    const { current } = refTextArea;
-    setTextAreaValue(current!.value!);
-  };
-
-  const handleTextAreaCloseOnClick = () => {
-    setTextAreaValue("");
-  };
 
   return (
     <>
       <HeroImage variant={variant} image={image} imagexs={imagexs} />
       <h1>Contact us</h1>
       <Form variant={variant}>
-        <Input
-          inputRef={refName}
-          variant={variant}
-          onChange={handleInputNameOnChange}
-          onClickReset={handleInputNameCloseOnClick}
-          placeholder={"Nome"}
-          onReset={true}
-          value={nameValue}
-          startAdornments={
-            <FontAwesomeIcon
-              icon={"user"}
-              style={{
-                color: "white",
-                backgroundColor: "transparent",
-                position: "relative",
-                zIndex: 100,
-              }}
-            />
-          }
-        />
+        <FormControl>
+          <ElementContainer>
+            <TextField {...register("name")} required inputRef={refName} error={nameError} type="text" label={"Name"} />
+            <div>{nameError && nameError}</div>
+          </ElementContainer>
 
-        <Input
-          inputRef={refEmailAddress}
-          variant={variant}
-          placeholder={"E-mail"}
-          onChange={handleInputEmailAddressOnChange}
-          onClickReset={handleInputEmailAddressCloseOnClick}
-          onReset={true}
-          value={emailAddressValue}
-          startAdornments={
-            <FontAwesomeIcon
-              icon={"envelope"}
-              style={{
-                color: "white",
-                backgroundColor: "transparent",
-                position: "relative",
-                zIndex: 100,
-              }}
-            />
-          }
-        />
+          <ElementContainer>
+            <TextField {...register("email")} required inputRef={refEmailAddress} error={emailError} label={"nickname@example.it"} type="text" />
+            <div>{emailError && emailError}</div>
+          </ElementContainer>
 
-        <Input
-          inputRef={refSubject}
-          variant={variant}
-          onChange={handleInputSubjectOnChange}
-          onClickReset={handleInputSubjectCloseOnClick}
-          placeholder={"Oggetto"}
-          onReset={true}
-          value={subjectValue}
-          startAdornments={
-            <FontAwesomeIcon
-              icon={"pencil-alt"}
-              style={{
-                color: "white",
-                backgroundColor: "transparent",
-                position: "relative",
-                zIndex: 100,
-              }}
-            />
-          }
-        />
-        <TextArea
-          inputRef={refTextArea}
-          variant={variant}
-          placeholder={"Scrivi il tuo messaggio..."}
-          onReset={false}
-          value={textAreaValue}
-          onChange={handleTextAreaOnChange}
-          onClickReset={handleTextAreaCloseOnClick}
-        />
-        <div>
-          <Button style={{}} variant={variant} textOnButton={"invia"} borderRadius={"none"} onClick={() => alert(":)")}></Button>
-        </div>
+          <ElementContainer>
+            <TextField {...register("subject")} required inputRef={refSubject} error={subjectError} label={"Oggetto"} type="text" />
+            <div>{subjectError && subjectError}</div>
+          </ElementContainer>
+
+          <ElementContainer>
+            <TextareaAutosize {...register("message")} ref={refTextArea} rows={12} placeholder={"Scrivi qui il tuo messaggio"} style={{ minWidth: "20em", maxWidth: "40em" }} />
+            <div>{messageError && messageError}</div>
+          </ElementContainer>
+          <div>
+            <Button style={{ marginTop: "2em" }} variant={variant} textOnButton={"invia"} borderRadius={"none"} onClick={handleSubmit(onSubmit)}></Button>
+          </div>
+        </FormControl>
       </Form>
     </>
   );
@@ -146,4 +94,8 @@ export const Form = styled.form<{ variant: string }>`
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
+`;
+
+export const ElementContainer = styled.div`
+  margin-top: 2em;
 `;
