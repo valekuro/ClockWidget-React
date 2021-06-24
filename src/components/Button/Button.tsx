@@ -22,4 +22,13 @@ export const ButtonStyle = styled.button<{ borderRadius: string; variant: string
   padding: 1em;
   background-color: ${(props) => props.theme.navBarStyles[props.variant].backgroundColor};
   color: ${(props) => props.theme.navBarStyles[props.variant].color};
+  box-shadow: 0 0.6em rgba(0, 0, 0, 0.6), 0 0.9em rgba(0, 0, 0, 0.4);
+  position: relative;
+  top: 0;
+  transition: all 100ms ease-in-out;
+
+  :active {
+    top: 0.4em;
+    box-shadow: 0 0.2em rgba(0, 0, 0, 0.6), 0 0.5em rgba(0, 0, 0, 0.4);
+  }
 `;

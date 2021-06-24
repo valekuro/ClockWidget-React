@@ -1,8 +1,10 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import ContactUsSlice from '../../reducers/ContactUsSlice';
+import CalculatorSlice from '../../reducers/CalculatorSlice';
 export const store = configureStore({
   reducer: {
     ContactUsSlice,
+    CalculatorSlice
   },
 });
 

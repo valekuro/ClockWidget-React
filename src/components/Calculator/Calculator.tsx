@@ -5,19 +5,15 @@ import ColumnContainer from "../ColumnsContainer/ColumnsContainer";
 import CalculatorScreen from "../CalculatorScreen";
 export interface CalculatorProps {
   variant: string;
+  variantCalculator: string;
 }
 
-export default function Calculator({ variant }: CalculatorProps) {
-  const [output, setOutput] = useState<string>("");
-  const handleOnClick = (digit: string) => {
-    setOutput(digit);
-  };
+export default function Calculator({ variant, variantCalculator }: CalculatorProps) {
+  console.log(variantCalculator);
   return (
-    <CalculatorContainer>
-      <ColumnContainer variant={variant} items={[<div></div>, <CalculatorScreen variant={variant} digit={output} />, <div></div>]} />
-      <ColumnContainer variant={variant} items={[<div></div>, <Keyword variant={variant} onClick={() => handleOnClick("")} />, <div></div>]} />
-    </CalculatorContainer>
+    <>
+      <ColumnContainer variant={variant} items={[<div></div>, <CalculatorScreen variantCalculator={variantCalculator} variant={variant} />, <div></div>]} />
+      <ColumnContainer variant={variant} items={[<div></div>, <Keyword variant={variant} variantCalculator={variantCalculator} />, <div></div>]} />
+    </>
   );
 }
-
-export const CalculatorContainer = styled.div``;

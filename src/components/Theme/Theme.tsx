@@ -40,11 +40,30 @@ export const theme = {
     medium: "5em",
     large: "7em",
   },
+
+  calculatorThemes: {
+    themeA: {
+      backgroundColorScreen: "#e7ffff",
+      backgroundColorCalculator: "#006fff",
+      borderRadius: "10%",
+    },
+    themeB: {
+      backgroundColorScreen: "#ffff56",
+      backgroundColorCalculator: "#f400a1",
+      borderRadius: "100%",
+    },
+    themeC: {
+      backgroundColorScreen: "#f7f7f7",
+      backgroundColorCalculator: "#cb2821",
+      borderRadius: "none",
+    },
+  },
 };
 
 export type NavBarStyles = keyof typeof theme.navBarStyles;
 export type LogoStyles = typeof theme.logoStyles;
 export type AvatarSizes = keyof typeof theme.avatarSizes;
+export type CalculatorThemes = keyof typeof theme.calculatorThemes;
 
 interface Props {
   children: React.ReactNode;
