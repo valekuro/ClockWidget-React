@@ -21,7 +21,7 @@ export default function Summary({ variant }: SummaryProps) {
 
   return (
     <>
-      <HeroImage variant={variant} image={image} imagexs={imagexs} />
+      <HeroImage image={image} imagexs={imagexs} />
 
       <SummaryContainer>
         <h1>Riepilogo del messaggio:</h1>

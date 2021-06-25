@@ -9,9 +9,11 @@ export interface ToggleMultiOptionsProps {
 
 export default function ToggleMultiOptions({ options }: ToggleMultiOptionsProps) {
   const dispatch = useAppDispatch();
-  const ref = useRef<HTMLInputElement[] | null>([]);
-  const handleInputRadio = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(chooseTheme(e.target.value));
+  const ref = useRef<HTMLInputElement[]>([]);
+  const handleInputRadio = (index: number) => {
+    console.log(ref.current.map((el) => el.checked));
+    //console.log(ref.current[index].checked);
+    dispatch(chooseTheme(ref.current[index].value));
   };
 
   return (
@@ -19,7 +21,16 @@ export default function ToggleMultiOptions({ options }: ToggleMultiOptionsProps)
       {options.map((item: string, index: number) => {
         return (
           <label>
-            <Radio onChange={(e) => handleInputRadio(e)} value={item} type={"radio"} key={index} name="theme" />
+            <input
+              ref={(el: any) => {
+                ref.current[index] = el;
+              }}
+              onChange={() => handleInputRadio(index)}
+              value={item}
+              type={"radio"}
+              key={index}
+              name="theme"
+            />
             {item}
           </label>
         );

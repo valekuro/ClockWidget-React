@@ -1,6 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../app/store/store";
-import { DataModel } from "../components/ContactUsPage/DataModel";
 
 export const initialStateDigits: string = "";
 export const initialStateColor: string = "A";

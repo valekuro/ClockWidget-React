@@ -78,7 +78,7 @@ export default function Home({ variant }: HomeProps) {
   };
   return (
     <div>
-      <HeroImage variant={variant} image={image} imagexs={imagexs} textLabelOnImage={"...WE ARE CREATIVES"} />
+      <HeroImage image={image} imagexs={imagexs} textLabelOnImage={"Welcome to Sunnyside"} />
       <ColumnContainer
         variant={variant}
         items={[
@@ -88,7 +88,8 @@ export default function Home({ variant }: HomeProps) {
             informations={[
               "We are a full-service agency specializing in helping brands grow fast. Engage your clients through compelling visuals that do most of the marketing for you.",
             ]}
-            link={"Learn More"}
+            link={"...Learn More"}
+            paddingContent={"1em"}
           />,
         ]}
       />
@@ -100,12 +101,15 @@ export default function Home({ variant }: HomeProps) {
             informations={[
               "Using a collaborative formuila of designers, researchers, photographers, videographers and copywriters, we'll build an extend your brand in digital places.",
             ]}
-            link={"Learn More"}
+            link={"...Learn More"}
+            paddingContent={"1em"}
           />,
 
           <ImageSection src={fruit} />,
         ]}
       />
+      <ColumnContainer variant={variant} items={[<p></p>]} />
+      <ColumnContainer variant={variant} items={[<p></p>]} />
       <Posts
         items={postToShow}
         variant={variant}

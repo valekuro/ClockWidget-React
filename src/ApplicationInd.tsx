@@ -9,6 +9,7 @@ import Summary from "./components/Summary";
 import Thanks from "./components/ThanksPage/ThanksPage";
 import Calculator from "./components/Calculator";
 import ColumnContainer from "./components/ColumnsContainer/ColumnsContainer";
+import TextContainer from "./components/TextContainer";
 const queryClient = new QueryClient();
 export interface ApplicationIndProps {
   variant: string;
@@ -27,7 +28,7 @@ export default function ApplicationInd({ variant }: ApplicationIndProps) {
               </Link>,
 
               <Link to="/contactus" style={{ color: "white", textDecoration: "none" }}>
-                Contact us
+                Contact
               </Link>,
               <div>Language</div>,
             ]}
@@ -43,7 +44,17 @@ export default function ApplicationInd({ variant }: ApplicationIndProps) {
             <Route exact path="/contactus" component={() => <ContactUsPage variant={variant} />} />
             <Route exact path={`/contactus/:data`} component={() => <Summary variant={variant} />} />
             <Route exact path={`/contactus/:data/send`} component={() => <Thanks variant={variant} />} />
-            <Route exact path={`/calculator`} component={() => <Calculator variantCalculator={`theme${color}`} variant={variant} />} />
+            <Route
+              exact
+              path={`/calculator`}
+              component={() => (
+                <>
+                  <ColumnContainer variant={variant} paddingBetweenItems={"4em"} items={[<div></div>]} />
+
+                  <ColumnContainer variant={variant} items={[<div></div>, <Calculator variantCalculator={`theme${color}`} variant={variant} />, <div></div>]} />
+                </>
+              )}
+            />
           </Switch>
           <FooterContainer variant={variant}>
             <ColumnContainer variant={variant} items={[<NameFooter>Valentina</NameFooter>]} />

@@ -14,6 +14,7 @@ import { useHistory, BrowserRouter as Router } from "react-router-dom";
 import { takeData } from "../../reducers/ContactUsSlice";
 import Button from "../Button";
 import { TextareaAutosize, TextField, FormControl } from "@material-ui/core";
+import TextContainer from "../TextContainer";
 
 export interface ContactUsPageProps {
   variant: string;
@@ -28,7 +29,11 @@ const useSchema = () => {
   });
   return schema;
 };
-
+/**
+ * This component manages the Contact Page. Here you find a form.
+ * @param variant mandatory: theme choosen
+ * @returns
+ */
 export default function ContactUsPage({ variant }: ContactUsPageProps) {
   //const hhh = useSelector((state: RootState) => state.data);
   const dispatch = useAppDispatch();
@@ -58,8 +63,14 @@ export default function ContactUsPage({ variant }: ContactUsPageProps) {
 
   return (
     <>
-      <HeroImage variant={variant} image={image} imagexs={imagexs} />
-      <h1>Contact us</h1>
+      <HeroImage image={image} imagexs={imagexs} />
+      <TextContainer
+        title={"Contattaci"}
+        informations={[
+          " Se hai bisogno di qualche informazione o condividere un suggerimento, questa è la sezione giusta! Ti risponderemo entro quattro o cinque giorni lavorativi",
+        ]}
+        textAlignInformation={"center"}
+      />
       <Form variant={variant}>
         <FormControl>
           <ElementContainer>

@@ -30,15 +30,18 @@ export default function Posts({ items, variant, backwardButton, forwardButton }:
         <ColumnContainer
           variant={variant}
           items={items.map((item: TestimonialProps) => {
-            return <TextContainer key={item.id} informations={[item.user]} />;
+            return <TextContainer key={item.id} subtitle={item.user} />;
           })}
         />
-        <ColumnContainer
-          variant={variant}
-          items={items.map((item: TestimonialProps) => {
-            return <TextContainer key={item.id} informations={[item.post]} />;
-          })}
-        />
+        <HideContent>
+          <ColumnContainer
+            variant={variant}
+            items={items.map((item: TestimonialProps) => {
+              return <TextContainer key={item.id} informations={[item.post]} />;
+            })}
+            paddingBetweenItems={"0.8rem"}
+          />
+        </HideContent>
       </div>
       {backwardButton}
     </div>
@@ -48,4 +51,10 @@ export default function Posts({ items, variant, backwardButton, forwardButton }:
 export const CommentsContainer = styled.div`
   margin-top: 4em;
   margin-bottom: 1.6em;
+`;
+export const HideContent = styled.span`
+  display: block;
+  @media only screen and (max-width: 768px) {
+    display: none;
+  }
 `;
