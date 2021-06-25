@@ -1,27 +1,21 @@
 import "./App.css";
 import Theme from "./components/Theme";
-import styled from "styled-components";
-import { QueryClient, QueryClientProvider, useQuery } from "react-query";
-import HomePage from "./components/HomePage";
-import NavigationBar from "./components/NavigationBar";
+import { store } from "./app/store/store";
+import { Provider } from "react-redux";
+import { QueryClient } from "react-query";
+import ApplicationInd from "./ApplicationInd";
+
 const queryClient = new QueryClient();
 function App() {
   const variant = "light";
+
   return (
     <Theme>
-      <QueryClientProvider client={queryClient}>
-        <SuperContainer variant={variant}>
-          <NavigationBar navigationItems={[<div>About</div>, <div>Services</div>, <div>Projects</div>]} logo={"Sunnyside"} variant={variant} />
-
-          <HomePage variant={variant} />
-        </SuperContainer>
-      </QueryClientProvider>
+      <Provider store={store}>
+        <ApplicationInd variant={variant} />
+      </Provider>
     </Theme>
   );
 }
-export const SuperContainer = styled.div<{ variant: string }>`
-  background-color: ${(props) => props.theme.navBarStyles[props.variant].backgroundPage};
-  color: ${(props) => props.theme.navBarStyles[props.variant].colorPage};
-  text-align: center;
-`;
+
 export default App;

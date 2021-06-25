@@ -2,7 +2,6 @@ import styled from "styled-components";
 export interface HeroImageProps {
   image: string;
   imagexs: string;
-  variant: string;
   textLabelOnImage?: string;
 }
 
@@ -10,15 +9,14 @@ export interface HeroImageProps {
  * Landing page hero image. This image is placed under the navigationbar
  * @param image mandatory: hero image source for large screen
  * @param imagexs mandatory: hero image source for small screen
- * @param variant mandatory: theme color (dark or light)
  * @param textLabelOnImage optional: if you want insert a text on the hero image, fill this parameter
  * @returns
  */
-export default function HeroImage({ image, imagexs, variant, textLabelOnImage }: HeroImageProps) {
+export default function HeroImage({ image, imagexs, textLabelOnImage }: HeroImageProps) {
   return (
     <ImageContainer>
       <Image image={image} imagexs={imagexs} />
-      {textLabelOnImage ? <LabelOnImage variant={variant}>{textLabelOnImage}</LabelOnImage> : undefined}
+      {textLabelOnImage ? <LabelOnImage>{textLabelOnImage}</LabelOnImage> : undefined}
     </ImageContainer>
   );
 }
@@ -43,21 +41,19 @@ export const ImageContainer = styled.div`
   justify-content: flex-end;
 `;
 
-export const LabelOnImage = styled.div<{
-  variant: string;
-}>`
+export const LabelOnImage = styled.div`
   position: absolute;
   width: 100%;
 
-  top: 20rem;
+  top: 15rem;
   z-index: 1;
   padding: 1em;
   font-family: ${(props) => props.theme.logoStyles.fontFamilyLogo};
-  font-size: 4em;
+  font-size: 8em;
   color: whitesmoke;
 
-  @media only screen and (max-width: 1366px) {
-    top: 11rem;
+  @media only screen and (max-width: 1200px) {
+    top: 6.5rem;
     font-size: 2em;
   }
 `;

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 export interface NavigationBarProps {
   navigationItems: JSX.Element[];
-  logo?: string;
+  logo?: JSX.Element;
   variant: string;
 }
 
@@ -16,7 +16,7 @@ export default function NavigationBar({ navigationItems, variant, logo }: Naviga
   return (
     <NavigationNav>
       <NavigationBarContainer variant={variant}>
-        <LogoContainer variant={variant}>{logo}</LogoContainer>
+        {logo}
         <NavigationBarItemsContainer>
           {navigationItems.map((item: JSX.Element, index: number) => {
             return (
@@ -34,7 +34,7 @@ export default function NavigationBar({ navigationItems, variant, logo }: Naviga
 export const NavigationNav = styled.nav`
   position: fixed;
   width: 100%;
-  z-index: 1;
+  z-index: 6;
 `;
 export const NavigationBarContainer = styled.div<{
   variant: string;
@@ -59,17 +59,9 @@ export const NavItemContainer = styled.div<{
   display: flex;
   padding: 1.3em;
   cursor: pointer;
+  color: ${(props) => props.theme.navBarStyles[props.variant].color};
+  text-decoration: none;
   &:hover {
     background-color: ${(props) => props.theme.navBarStyles[props.variant].backgroundOnHoverItem};
   }
-`;
-
-export const LogoContainer = styled.div<{
-  variant: string;
-}>`
-  display: flex;
-  padding: 0.5em;
-  font-family: ${(props) => props.theme.logoStyles.fontFamilyLogo};
-  font-size: ${(props) => props.theme.logoStyles.fontSizeLogo};
-  color: ${(props) => props.theme.navBarStyles[props.variant].color};
 `;

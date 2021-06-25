@@ -15,24 +15,56 @@ export const theme = {
       backgroundOnHoverItem: "rgba(255,255,255,0.33)",
       boxShadowNavBar: "0 8px 17px rgba(0, 0, 0, 0.45)",
       color: "whitesmoke",
+      colorsecondary: "black",
+      backgroundFooter: "rgba(0,0,0,0.33)",
     },
     dark: {
       backgroundPage: "black",
       colorPage: "white",
       backgroundColor: "#000000c0",
       backgroundOnHoverItem: "rgba(255,255,255,0.33)",
+      backgroundFooter: "rgba(255,255,255,0.33)",
+
       boxShadowNavBar: "0 8px 17px rgba(0, 0, 0, 0.15)",
       color: "white",
+      colorsecondary: "whitesmoke",
     },
   },
   logoStyles: {
     fontFamilyLogo: "'Dancing Script', cursive",
     fontSizeLogo: "1.5em",
   },
+
+  avatarSizes: {
+    small: "3em",
+    medium: "5em",
+    large: "7em",
+  },
+
+  calculatorThemes: {
+    themeA: {
+      backgroundColorScreen: "#e7ffff",
+      backgroundColorCalculator: "#006fff",
+      borderRadius: "10%",
+    },
+    themeB: {
+      backgroundColorScreen: "#ffff56",
+      backgroundColorCalculator: "#f400a1",
+      borderRadius: "100%",
+    },
+    themeC: {
+      backgroundColorScreen: "#f7f7f7",
+      backgroundColorCalculator: "#cb2821",
+      borderRadius: "none",
+    },
+  },
 };
 
 export type NavBarStyles = keyof typeof theme.navBarStyles;
 export type LogoStyles = typeof theme.logoStyles;
+export type AvatarSizes = keyof typeof theme.avatarSizes;
+export type CalculatorThemes = keyof typeof theme.calculatorThemes;
+
 interface Props {
   children: React.ReactNode;
 }
