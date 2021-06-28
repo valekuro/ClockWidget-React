@@ -15,6 +15,7 @@ import { takeData } from "../../reducers/ContactUsSlice";
 import Button from "../Button";
 import { TextareaAutosize, TextField, FormControl } from "@material-ui/core";
 import TextContainer from "../TextContainer";
+import { theme } from "../Theme";
 
 export interface ContactUsPageProps {
   variant: string;
@@ -65,7 +66,6 @@ export default function ContactUsPage({ variant }: ContactUsPageProps) {
     <>
       <HeroImage image={image} imagexs={imagexs} />
       <TextContainer
-        title={"Contattaci"}
         informations={[
           " Se hai bisogno di qualche informazione o condividere un suggerimento, questa è la sezione giusta! Ti risponderemo entro quattro o cinque giorni lavorativi",
         ]}
@@ -74,23 +74,53 @@ export default function ContactUsPage({ variant }: ContactUsPageProps) {
       <Form variant={variant}>
         <FormControl>
           <ElementContainer>
-            <TextField {...register("name")} required inputRef={refName} error={nameError} type="text" label={"Name"} />
-            <div>{nameError && nameError}</div>
+            <TextField
+              {...register("name")}
+              required
+              inputRef={refName}
+              error={nameError}
+              type="text"
+              label={"Name"}
+              style={{ backgroundColor: `${theme.navBarStyles.light.backgroundOnHoverItem}` }}
+            />
+            <ErrorText>{nameError && nameError}</ErrorText>
           </ElementContainer>
 
           <ElementContainer>
-            <TextField {...register("email")} required inputRef={refEmailAddress} error={emailError} label={"nickname@example.it"} type="text" />
-            <div>{emailError && emailError}</div>
+            <TextField
+              {...register("email")}
+              required
+              inputRef={refEmailAddress}
+              error={emailError}
+              label={"nickname@example.it"}
+              type="text"
+              style={{ backgroundColor: `${theme.navBarStyles.light.backgroundOnHoverItem}` }}
+            />
+            <ErrorText>{emailError && emailError}</ErrorText>
           </ElementContainer>
 
           <ElementContainer>
-            <TextField {...register("subject")} required inputRef={refSubject} error={subjectError} label={"Oggetto"} type="text" />
-            <div>{subjectError && subjectError}</div>
+            <TextField
+              {...register("subject")}
+              required
+              inputRef={refSubject}
+              error={subjectError}
+              label={"Oggetto"}
+              type="text"
+              style={{ backgroundColor: `${theme.navBarStyles.light.backgroundOnHoverItem}` }}
+            />
+            <ErrorText>{subjectError && subjectError}</ErrorText>
           </ElementContainer>
 
           <ElementContainer>
-            <TextareaAutosize {...register("message")} ref={refTextArea} rows={12} placeholder={"Scrivi qui il tuo messaggio"} style={{ minWidth: "20em", maxWidth: "40em" }} />
-            <div>{messageError && messageError}</div>
+            <TextareaAutosize
+              {...register("message")}
+              ref={refTextArea}
+              rows={12}
+              placeholder={"Scrivi qui il tuo messaggio"}
+              style={{ minWidth: "20em", maxWidth: "40em", backgroundColor: `${theme.navBarStyles.light.backgroundOnHoverItem}` }}
+            />
+            <ErrorText>{messageError && messageError}</ErrorText>
           </ElementContainer>
           <div>
             <Button style={{ marginTop: "2em" }} variant={variant} textOnButton={"invia"} borderRadius={"none"} onClick={handleSubmit(onSubmit)}></Button>
@@ -105,8 +135,16 @@ export const Form = styled.form<{ variant: string }>`
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
+  margin-bottom: 3em;
 `;
 
 export const ElementContainer = styled.div`
   margin-top: 2em;
+  display: flex;
+  flex-flow: column nowrap;
+`;
+
+export const ErrorText = styled.div`
+  color: red;
+  font-size: 0.8em;
 `;

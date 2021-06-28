@@ -1,7 +1,7 @@
 import styled from "styled-components";
 export interface ColumnContainerProps {
   items?: JSX.Element[] | undefined;
-  variant: string;
+  variant?: string;
   paddingBetweenItems?: string;
 }
 /**
@@ -25,7 +25,7 @@ export default function ColumnContainer({ items, variant, paddingBetweenItems }:
   );
 }
 
-export const ItemsContainer = styled.div<{ variant: string }>`
+export const ItemsContainer = styled.div<{ variant?: string }>`
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-evenly;

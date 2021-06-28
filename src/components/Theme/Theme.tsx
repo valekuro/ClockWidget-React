@@ -58,12 +58,19 @@ export const theme = {
       borderRadius: "none",
     },
   },
+  gameTheme: {
+    backgroundColor: "radial-gradient(hsl(214, 47%, 23%), hsl(237, 49%, 15%))",
+    fontFamily: "'Barlow Semi Condensed', sans-serif;",
+    darkText: "hsl(229, 25%, 31%)", //grey
+    scoreText: "hsl(229, 64%, 46%)", //blue
+  },
 };
 
 export type NavBarStyles = keyof typeof theme.navBarStyles;
 export type LogoStyles = typeof theme.logoStyles;
 export type AvatarSizes = keyof typeof theme.avatarSizes;
 export type CalculatorThemes = keyof typeof theme.calculatorThemes;
+export type GameTheme = keyof typeof theme.gameTheme;
 
 interface Props {
   children: React.ReactNode;

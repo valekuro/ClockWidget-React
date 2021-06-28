@@ -88,7 +88,6 @@ export default function Home({ variant }: HomeProps) {
             informations={[
               "We are a full-service agency specializing in helping brands grow fast. Engage your clients through compelling visuals that do most of the marketing for you.",
             ]}
-            link={"...Learn More"}
             paddingContent={"1em"}
           />,
         ]}

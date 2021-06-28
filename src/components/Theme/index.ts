@@ -1,7 +1,7 @@
-import Theme, {theme, NavBarStyles, LogoStyles, AvatarSizes, CalculatorThemes} from './Theme';
+import Theme, {theme, NavBarStyles, LogoStyles, AvatarSizes, CalculatorThemes, GameTheme} from './Theme';
 
 export default Theme;
 
 export { theme };
-export type { NavBarStyles, LogoStyles, AvatarSizes, CalculatorThemes };
+export type { NavBarStyles, LogoStyles, AvatarSizes, CalculatorThemes, GameTheme };
 

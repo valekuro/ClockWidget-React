@@ -25,4 +25,5 @@ export const CalculatorContainer = styled.div`
   box-shadow: 0 3px 26px rgb(0 0 0 / 31%), 0 16px 47px rgb(0 0 0 / 65%);
   display: flex;
   flex-flow: column nowrap;
+  margin-bottom: 3em;
 `;

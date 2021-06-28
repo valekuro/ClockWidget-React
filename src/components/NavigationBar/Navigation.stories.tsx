@@ -2,7 +2,7 @@ import { Story } from "@storybook/react";
 import Theme, { theme } from "../Theme";
 import NavigationBar, { NavigationBarProps } from "./NavigationBar";
 import styled from "styled-components";
-
+import LogoContainer from "./LogoContainer";
 export default {
   title: "Components/NavigationBar",
   component: NavigationBar,
@@ -24,22 +24,12 @@ export default {
 
 const Template: Story<NavigationBarProps> = (args) => (
   <Theme>
-    <NavigationBar navigationItems={args.navigationItems} variant={args.variant} logo={<LogoContainer variant={args.variant}>Sunnyside</LogoContainer>} />
+    <NavigationBar navigationItems={args.navigationItems} variant={args.variant} logo={<LogoContainer variant={args.variant} label={"Sunnyside"} />} />
   </Theme>
 );
 
 export const NavigationBar_ = Template.bind({});
 NavigationBar_.args = {
   variant: "light",
-  navigationItems: [<div>About</div>, <div>Contact us</div>, <div>Language</div>],
+  navigationItems: [<div>Calc</div>, <div>Contact</div>, <div>Language</div>],
 };
-
-export const LogoContainer = styled.div<{
-  variant: string;
-}>`
-  display: flex;
-  padding: 0.5em;
-  font-family: ${(props) => props.theme.logoStyles.fontFamilyLogo};
-  font-size: ${(props) => props.theme.logoStyles.fontSizeLogo};
-  color: ${(props) => props.theme.navBarStyles[props.variant].color};
-`;

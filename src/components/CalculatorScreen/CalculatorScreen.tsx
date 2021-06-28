@@ -60,6 +60,7 @@ export const DigitItem = styled.span`
   max-width: 17em;
   min-width: 10em;
   font-size: 3em;
+  color: black;
 `;
 
 export const Calc = styled.div<{ variantCalculator: string }>`

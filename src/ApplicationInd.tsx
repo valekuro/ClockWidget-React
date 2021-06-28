@@ -8,6 +8,7 @@ import ContactUsPage from "./components/ContactUsPage";
 import Summary from "./components/Summary";
 import Thanks from "./components/ThanksPage/ThanksPage";
 import Calculator from "./components/Calculator";
+import Game from "./components/Game";
 import ColumnContainer from "./components/ColumnsContainer/ColumnsContainer";
 import TextContainer from "./components/TextContainer";
 const queryClient = new QueryClient();
@@ -21,6 +22,7 @@ export default function ApplicationInd({ variant }: ApplicationIndProps) {
     <QueryClientProvider client={queryClient}>
       <SuperContainer variant={variant}>
         <Router>
+          <Switch></Switch>
           <NavigationBar
             navigationItems={[
               <Link to="/calculator" style={{ color: "white", textDecoration: "none" }}>
@@ -30,7 +32,9 @@ export default function ApplicationInd({ variant }: ApplicationIndProps) {
               <Link to="/contactus" style={{ color: "white", textDecoration: "none" }}>
                 Contact
               </Link>,
-              <div>Language</div>,
+              <Link to="/playagame" style={{ color: "white", textDecoration: "none" }}>
+                Play
+              </Link>,
             ]}
             logo={
               <Link to="/" style={{ color: "white", textDecoration: "none" }}>
@@ -44,6 +48,18 @@ export default function ApplicationInd({ variant }: ApplicationIndProps) {
             <Route exact path="/contactus" component={() => <ContactUsPage variant={variant} />} />
             <Route exact path={`/contactus/:data`} component={() => <Summary variant={variant} />} />
             <Route exact path={`/contactus/:data/send`} component={() => <Thanks variant={variant} />} />
+            <Route
+              exact
+              path={`/playagame`}
+              component={() => (
+                <GameContainer>
+                  <ColumnContainer variant={variant} paddingBetweenItems={"4em"} items={[<div></div>]} />
+
+                  <ColumnContainer variant={variant} items={[<div></div>, <Game />, <div></div>]} />
+                </GameContainer>
+              )}
+            />
+
             <Route
               exact
               path={`/calculator`}
@@ -74,7 +90,6 @@ export const SuperContainer = styled.div<{ variant: string }>`
 export const FooterContainer = styled.div<{ variant: string }>`
   background-color: ${(props) => props.theme.navBarStyles[props.variant].backgroundFooter};
   color: ${(props) => props.theme.navBarStyles[props.variant].colorPage};
-  margin-top: 2em;
   padding: 3em;
 `;
 
@@ -90,4 +105,12 @@ export const LogoContainer = styled.div<{
   font-family: ${(props) => props.theme.logoStyles.fontFamilyLogo};
   font-size: ${(props) => props.theme.logoStyles.fontSizeLogo};
   color: ${(props) => props.theme.navBarStyles[props.variant].color};
+`;
+
+export const GameContainer = styled.div`
+  background-image: ${(props) => props.theme.gameTheme.backgroundColor};
+  font-family: ${(props) => props.theme.gameTheme.fontFamily};
+  font-weight: 700;
+  display: flex;
+  flex-flow: column nowrap;
 `;

@@ -10,7 +10,14 @@ export interface PostsProps {
   backwardButton?: JSX.Element;
   forwardButton?: JSX.Element;
 }
-
+/**
+ * The component creates a carousel if you set the buttons. Otherwise you can see elements columns
+ * @param items
+ * @param variant mandatory: theme choosen
+ * @param backwardButton optional: previous button
+ * @param forwardButton optional: next button
+ * @returns
+ */
 export default function Posts({ items, variant, backwardButton, forwardButton }: PostsProps) {
   return (
     <div style={{ display: "flex", flexFlow: "column nowrap", width: "100%", justifyContent: "center" }}>
@@ -18,9 +25,9 @@ export default function Posts({ items, variant, backwardButton, forwardButton }:
       <div style={{ flexGrow: 1 }}>
         <ColumnContainer
           variant={variant}
-          items={items.map((item: TestimonialProps) => {
+          items={items.map((item: TestimonialProps, index: number) => {
             return (
-              <CommentsContainer>
+              <CommentsContainer key={index}>
                 <Avatar src={myImage} size="medium" alt={"Your profile image"} />{" "}
               </CommentsContainer>
             );
